@@ -1,6 +1,28 @@
+<p align="center">
+  <a href="https://runearc.com/integrations/go">
+    <picture>
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/runearc-labs/runearc-go/main/.github/assets/banner-light.png">
+      <img alt="Runearc for Go. Install with the command shown, then send email and give agents inboxes." src="https://raw.githubusercontent.com/runearc-labs/runearc-go/main/.github/assets/banner-dark.png" width="100%">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/runearc-labs/runearc-go/blob/main/CHANGELOG.md"><img alt="version 0.1.0" src="https://img.shields.io/badge/version-0.1.0-0007cd?style=flat-square&labelColor=0f0f0f"></a> <a href="https://github.com/runearc-labs/runearc-go/blob/main/LICENSE"><img alt="MIT licence" src="https://img.shields.io/badge/licence-MIT-2b2b2b?style=flat-square&labelColor=0f0f0f"></a> <a href="https://runearc.com/integrations/go"><img alt="requires go 1.21+" src="https://img.shields.io/badge/requires-go%201.21%2B-2b2b2b?style=flat-square&labelColor=0f0f0f"></a> <a href="https://runearc.com/docs/sdk"><img alt="tested against the real API" src="https://img.shields.io/badge/tests-real%20API-14833b?style=flat-square&labelColor=0f0f0f"></a>
+</p>
+
+<p align="center">
+  <a href="https://runearc.com"><b>Website</b></a> ·
+  <a href="https://runearc.com/docs/sdk">Docs</a> ·
+  <a href="https://runearc.com/integrations/go">Go guide</a> ·
+  <a href="https://runearc.com/docs/mcp">MCP</a> ·
+  <a href="https://runearc.com/status">Status</a> ·
+  <a href="https://runearc.com/changelog">Changelog</a>
+</p>
+
 # runearc-go
 
-Send email and give your agents an inbox, from Go.
+The official Go SDK for [Runearc](https://runearc.com), email infrastructure for apps and AI agents. Send email and give your agents an inbox, from Go.
 
 ```sh
 go get github.com/runearc-labs/runearc-go
