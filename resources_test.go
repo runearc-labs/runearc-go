@@ -256,18 +256,14 @@ func TestSuppressionsAndEvents(t *testing.T) {
 	// The API has no POST for suppressions (bounces and complaints add them, and
 	// simulated test recipients are never suppressed), so one row is added with SQL,
 	// the way core's add_suppression stores it.
-	sent, err := c.Emails.Send(ctx, &runearc.SendEmailRequest{From: "app@" + stack.domain, To: []string{testAddress("delivered")}, Subject: unique("events"), Text: "x"})
-	if err != nil {
-		t.Fatal(err)
-	}
-	email, err := c.Emails.Get(ctx, sent.ID)
+	_, err := c.Emails.Send(ctx, &runearc.SendEmailRequest{From: "app@" + stack.domain, To: []string{testAddress("delivered")}, Subject: unique("events"), Text: "x"})
 	if err != nil {
 		t.Fatal(err)
 	}
 	address := fmt.Sprintf("blocked-%d@example.org", time.Now().UnixNano())
 	if out, err := psql(stack.dbURL, fmt.Sprintf(
-		"INSERT INTO suppressions (org_id, project_id, address, reason) VALUES ('%s', '%s', '%s', 'manual')",
-		stack.orgID, email.ProjectID, address)); err != nil {
+		"INSERT INTO suppressions (org_id, address, reason) VALUES ('%s', '%s', 'manual')",
+		stack.orgID, address)); err != nil {
 		t.Fatalf("psql: %v: %s", err, out)
 	}
 	list, err := c.Suppressions.List(ctx)

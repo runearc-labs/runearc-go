@@ -93,7 +93,7 @@ func main() {
 | `WithMaxRetries(n)` | `2` | Retries after the first attempt (see [Retries](#retries)). |
 | `WithTimeout(d)` | `60s` | Per attempt. |
 | `WithHTTPClient(c)` | a new `http.Client` | Bring your own transport. |
-| `WithHeader(name, value)` | none | Sent with every request, such as `Runearc-Project`. |
+| `WithHeader(name, value)` | none | Sent with every request. |
 
 Every method takes a `context.Context` first and returns a typed result and an `error`. Every method also accepts trailing per call options: `WithIdempotencyKey(key)`, `WithRequestTimeout(d)` and, for `Emails.Batch`, `WithBatchValidation(v)`.
 

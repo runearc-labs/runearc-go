@@ -81,8 +81,8 @@ func WithTimeout(d time.Duration) Option { return func(c *Client) { c.timeout = 
 // timeouts are applied through the request context, not the client's Timeout.
 func WithHTTPClient(h *http.Client) Option { return func(c *Client) { c.http = h } }
 
-// WithHeader adds a header to every request, such as Runearc-Project. The
-// Authorization header cannot be replaced.
+// WithHeader adds a header to every request. The Authorization header cannot
+// be replaced.
 func WithHeader(name, value string) Option {
 	return func(c *Client) { c.headers[name] = value }
 }

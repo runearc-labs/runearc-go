@@ -14,13 +14,12 @@ type ConversationsService struct{ c *Client }
 func (s *ConversationsService) List(ctx context.Context, filter ConversationFilter, opts ...RequestOption) (*Page[Conversation], error) {
 	q := url.Values{}
 	for k, v := range map[string]string{
-		"status":     filter.Status,
-		"assignee":   filter.Assignee,
-		"project_id": filter.ProjectID,
-		"inbox_id":   filter.InboxID,
-		"domain":     filter.Domain,
-		"q":          filter.Q,
-		"cursor":     filter.Cursor,
+		"status":   filter.Status,
+		"assignee": filter.Assignee,
+		"inbox_id": filter.InboxID,
+		"domain":   filter.Domain,
+		"q":        filter.Q,
+		"cursor":   filter.Cursor,
 	} {
 		if v != "" {
 			q.Set(k, v)
@@ -34,7 +33,7 @@ func (s *ConversationsService) List(ctx context.Context, filter ConversationFilt
 	return orNil(&out, err)
 }
 
-// Counts returns the open and unread conversations, in total and per project and inbox.
+// Counts returns the open and unread conversations, in total and per inbox.
 func (s *ConversationsService) Counts(ctx context.Context, opts ...RequestOption) (*ConversationCounts, error) {
 	var out ConversationCounts
 	err := s.c.doJSON(ctx, call{method: http.MethodGet, path: "/v1/conversations/counts"}, opts, &out)

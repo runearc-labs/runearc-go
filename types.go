@@ -105,16 +105,15 @@ const (
 
 // Email is an email in a list.
 type Email struct {
-	ID        string   `json:"id"`
-	ProjectID string   `json:"project_id"`
-	DomainID  *string  `json:"domain_id"`
-	From      string   `json:"from"`
-	FromName  *string  `json:"from_name"`
-	To        []string `json:"to"`
-	Cc        []string `json:"cc"`
-	Bcc       []string `json:"bcc"`
-	ReplyTo   []string `json:"reply_to"`
-	Subject   string   `json:"subject"`
+	ID       string   `json:"id"`
+	DomainID *string  `json:"domain_id"`
+	From     string   `json:"from"`
+	FromName *string  `json:"from_name"`
+	To       []string `json:"to"`
+	Cc       []string `json:"cc"`
+	Bcc      []string `json:"bcc"`
+	ReplyTo  []string `json:"reply_to"`
+	Subject  string   `json:"subject"`
 	// Status is one of the Email* constants, or a newer status.
 	Status    string `json:"status"`
 	Tags      []Tag  `json:"tags"`
@@ -204,7 +203,6 @@ type SenderAddress struct {
 type Inbox struct {
 	ID          string    `json:"id"`
 	OrgID       string    `json:"org_id"`
-	ProjectID   string    `json:"project_id"`
 	Address     string    `json:"address"`
 	LocalPart   string    `json:"local_part"`
 	Domain      string    `json:"domain"`
@@ -235,11 +233,10 @@ type MessageAttachment struct {
 
 // Message is an inbound or outbound message of an inbox.
 type Message struct {
-	ID        string `json:"id"`
-	OrgID     string `json:"org_id"`
-	ProjectID string `json:"project_id"`
-	InboxID   string `json:"inbox_id"`
-	ThreadID  string `json:"thread_id"`
+	ID       string `json:"id"`
+	OrgID    string `json:"org_id"`
+	InboxID  string `json:"inbox_id"`
+	ThreadID string `json:"thread_id"`
 	// Direction is inbound or outbound.
 	Direction    string              `json:"direction"`
 	RFCMessageID *string             `json:"rfc_message_id"`
@@ -319,7 +316,6 @@ type Waited struct {
 type Thread struct {
 	ID            string    `json:"id"`
 	OrgID         string    `json:"org_id"`
-	ProjectID     string    `json:"project_id"`
 	InboxID       string    `json:"inbox_id"`
 	Subject       string    `json:"subject"`
 	LastMessageAt time.Time `json:"last_message_at"`
@@ -341,12 +337,6 @@ type ThreadWithMessages struct {
 // ---------------------------------------------------------------------------
 // Conversations
 
-// ConversationProject names the project of a conversation.
-type ConversationProject struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
 // ConversationInbox names the inbox of a conversation.
 type ConversationInbox struct {
 	ID      string `json:"id"`
@@ -362,11 +352,10 @@ type ConversationAssignee struct {
 // Conversation is a thread in the shared support view.
 type Conversation struct {
 	// ID is the thread id.
-	ID      string              `json:"id"`
-	Project ConversationProject `json:"project"`
-	Inbox   ConversationInbox   `json:"inbox"`
-	Subject string              `json:"subject"`
-	Snippet string              `json:"snippet"`
+	ID      string            `json:"id"`
+	Inbox   ConversationInbox `json:"inbox"`
+	Subject string            `json:"subject"`
+	Snippet string            `json:"snippet"`
 	// Status is open or closed.
 	Status        string                `json:"status"`
 	SnoozedUntil  *time.Time            `json:"snoozed_until"`
@@ -383,9 +372,8 @@ type ConversationFilter struct {
 	// Status is open, closed, snoozed or all.
 	Status string
 	// Assignee is "me", "none" or a user id.
-	Assignee  string
-	ProjectID string
-	InboxID   string
+	Assignee string
+	InboxID  string
 	// Domain is a comma separated list of domain names.
 	Domain string
 	// Q searches subjects and snippets.
@@ -404,28 +392,19 @@ type ConversationUpdate struct {
 	SnoozedUntil *Nullable[time.Time] `json:"snoozed_until,omitempty"`
 }
 
-// ProjectCount is the open and unread conversations of a project.
-type ProjectCount struct {
-	ProjectID string `json:"project_id"`
-	Open      int    `json:"open"`
-	Unread    int    `json:"unread"`
-}
-
 // InboxCount is the open and unread conversations of an inbox.
 type InboxCount struct {
-	InboxID   string `json:"inbox_id"`
-	ProjectID string `json:"project_id"`
-	Open      int    `json:"open"`
-	Unread    int    `json:"unread"`
+	InboxID string `json:"inbox_id"`
+	Open    int    `json:"open"`
+	Unread  int    `json:"unread"`
 }
 
 // ConversationCounts is the result of [ConversationsService.Counts].
 type ConversationCounts struct {
-	Open         int            `json:"open"`
-	AssignedToMe int            `json:"assigned_to_me"`
-	Unassigned   int            `json:"unassigned"`
-	ByProject    []ProjectCount `json:"by_project"`
-	ByInbox      []InboxCount   `json:"by_inbox"`
+	Open         int          `json:"open"`
+	AssignedToMe int          `json:"assigned_to_me"`
+	Unassigned   int          `json:"unassigned"`
+	ByInbox      []InboxCount `json:"by_inbox"`
 }
 
 // ---------------------------------------------------------------------------
@@ -449,7 +428,6 @@ type DomainRecord struct {
 type Domain struct {
 	ID             string  `json:"id"`
 	OrgID          string  `json:"org_id"`
-	ProjectID      string  `json:"project_id"`
 	Name           string  `json:"name"`
 	ParentDomainID *string `json:"parent_domain_id"`
 	// Status is pending, verified or failing.
@@ -483,13 +461,12 @@ type AddedDomain struct {
 
 // Webhook is a webhook endpoint.
 type Webhook struct {
-	ID        string `json:"id"`
-	OrgID     string `json:"org_id"`
-	ProjectID string `json:"project_id"`
-	URL       string `json:"url"`
+	ID    string `json:"id"`
+	OrgID string `json:"org_id"`
+	URL   string `json:"url"`
 	// EventTypes is empty for every event type.
 	EventTypes []string `json:"event_types"`
-	// InboxID is nil for every inbox in the project.
+	// InboxID is nil for every inbox in the workspace.
 	InboxID   *string   `json:"inbox_id"`
 	CreatedAt time.Time `json:"created_at"`
 }
@@ -528,7 +505,6 @@ type Delivery struct {
 type Event struct {
 	ID        string          `json:"id"`
 	OrgID     string          `json:"org_id"`
-	ProjectID string          `json:"project_id"`
 	Type      string          `json:"type"`
 	Data      json.RawMessage `json:"data"`
 	CreatedAt time.Time       `json:"created_at"`
@@ -562,12 +538,11 @@ type WebhookEvent struct {
 
 // APIKey is an API key without its secret.
 type APIKey struct {
-	ID        string `json:"id"`
-	OrgID     string `json:"org_id"`
-	ProjectID string `json:"project_id"`
-	Name      string `json:"name"`
-	Prefix    string `json:"prefix"`
-	Scope     string `json:"scope"`
+	ID     string `json:"id"`
+	OrgID  string `json:"org_id"`
+	Name   string `json:"name"`
+	Prefix string `json:"prefix"`
+	Scope  string `json:"scope"`
 	// Permissions is full, sending or inbox.
 	Permissions string     `json:"permissions"`
 	DomainID    *string    `json:"domain_id"`

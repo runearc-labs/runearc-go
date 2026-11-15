@@ -18,7 +18,7 @@ func ExampleNew() {
 	client, err := runearc.New("",
 		runearc.WithMaxRetries(3),
 		runearc.WithTimeout(30*time.Second),
-		runearc.WithHeader("Runearc-Project", "prj_123"),
+		runearc.WithHeader("X-Request-Source", "billing-job"),
 	)
 	if err != nil {
 		log.Fatal(err)

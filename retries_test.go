@@ -306,11 +306,11 @@ func TestRequestHeaders(t *testing.T) {
 		got = r.Header.Clone()
 		writeJSON(w, 200, `{"data":[]}`)
 	})
-	c := fakeClient(t, s.URL, runearc.WithHeader("Runearc-Project", "prj_1"), runearc.WithHeader("Authorization", "Bearer evil"))
+	c := fakeClient(t, s.URL, runearc.WithHeader("X-Request-Source", "test"), runearc.WithHeader("Authorization", "Bearer evil"))
 	if _, err := c.Senders.List(context.Background()); err != nil {
 		t.Fatal(err)
 	}
-	if got.Get("Authorization") != "Bearer mb_test" || got.Get("Runearc-Project") != "prj_1" ||
+	if got.Get("Authorization") != "Bearer mb_test" || got.Get("X-Request-Source") != "test" ||
 		got.Get("Accept") != "application/json" || got.Get("User-Agent") != "runearc-go/"+runearc.Version {
 		t.Fatalf("headers %v", got)
 	}
